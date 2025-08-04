@@ -54,7 +54,7 @@ public class Main {
 
     private static void playAgain(Scanner scanner){
         System.out.println("Would you like to continue playing? [Y][N]");
-        scanner.nextLine();
+        scanner.nextLine(); // clear buffer
         String selectedOption = scanner.nextLine();
         if (selectedOption.equalsIgnoreCase("Y")){
             generateRandomNumber();
