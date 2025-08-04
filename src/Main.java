@@ -1,12 +1,24 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
 
     private static int randomNumber;
 
-    static {
-        generateRandomNumber();
-    }
+    private static final String successMessage = """
+                        *******************************************
+                        ***** You Won! You guessed the number *****
+                        *******************************************
+                        """;
+
+    private static final String attemptMessage = """
+                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        !!!!!!!! You Lost! Out of attempts !!!!!!!!
+                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        """;
+
+    // static block
+    static { generateRandomNumber(); }
 
     private static void generateRandomNumber() {
         double generatedRandomNumber = (Math.random() * 9) + 1; // Generate random number from 1 - 10
@@ -20,16 +32,19 @@ public class Main {
 
     private static void play(Scanner scanner){
         int attempt = 3;
+        int guess = 0;
         do{
             System.out.println("\nHI-LO Game \t Attempts left: " + attempt);
             System.out.println("Enter number from 1 to 10 to guess:");
-            int guess = scanner.nextInt();
+
+            try{
+                guess = scanner.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("\n!!!!! Invalid input !!!!!");
+                playAgain(scanner);
+            }
+
             if (guess == randomNumber){
-                String successMessage = """
-                        *******************************************
-                        ***** You Won! You guessed the number *****
-                        *******************************************
-                        """;
                 System.out.println("\n"+ successMessage);
                 break;
             }
@@ -39,27 +54,27 @@ public class Main {
             // decrease attempt
             attempt--;
 
-            if (attempt == 0){
-                String attemptMessage = """
-                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        !!!!!!!! You Lost! Out of attempts !!!!!!!!
-                        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                        """;
+            if (attempt == 0)
                 System.out.println("\n"+ attemptMessage);
-            }
         }while (attempt > 0);
 
+        // ask user if he wants to play again
         playAgain(scanner);
     }
 
     private static void playAgain(Scanner scanner){
         System.out.println("Would you like to continue playing? [Y][N]");
+
+        // clear buffer
         scanner.nextLine();
+
         String selectedOption = scanner.nextLine();
         if (selectedOption.equalsIgnoreCase("Y")){
             generateRandomNumber();
             play(scanner);
+        } else {
+            scanner.close();
+            System.exit(0);
         }
     }
-
 }
