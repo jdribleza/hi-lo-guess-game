@@ -64,10 +64,14 @@ public class Main {
 
     private static void playAgain(Scanner scanner){
         System.out.println("Would you like to continue playing? [Y][N]");
+<<<<<<< HEAD
 
         // clear buffer
         scanner.nextLine();
 
+=======
+        scanner.nextLine(); // clear buffer
+>>>>>>> 0a60ca60be974025f297b1bdd74bc412b5f2d77d
         String selectedOption = scanner.nextLine();
         if (selectedOption.equalsIgnoreCase("Y")){
             generateRandomNumber();
@@ -77,4 +81,9 @@ public class Main {
             System.exit(0);
         }
     }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> 0a60ca60be974025f297b1bdd74bc412b5f2d77d
